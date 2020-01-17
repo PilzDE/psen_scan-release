@@ -1,0 +1,25 @@
+ros-melodic-psen-scan (1.0.3-1stretch) stretch; urgency=high
+
+  * Add x-axis-rotation feature.
+    Introduced new parameter "x_axis_rotation" which describes clockwise rotation of the x-axis around the center in degrees.
+    The default value is 275°/2 = 137.5°.
+    Then the x-axis points in the direction of the middle of the scan.
+  * Additional change:
+    Fill time related message fields in sensor_msgs/LaserScan message.
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Thu, 16 Jan 2020 23:00:00 -0000
+
+ros-melodic-psen-scan (1.0.2-1stretch) stretch; urgency=high
+
+  * Change spinner to AsyncSpinner. (#6)
+  * Add missing install of launch files (#5)
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Mon, 16 Dec 2019 23:00:00 -0000
+
+ros-melodic-psen-scan (1.0.1-1stretch) stretch; urgency=high
+
+  * Initial Commit.
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Sun, 24 Nov 2019 23:00:00 -0000
+
+
