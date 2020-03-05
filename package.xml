@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>psen_scan</name>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <description>The psen_scan package for Pilz laser scanner</description>
 
   <maintainer email="a.gutenkunst@pilz.de">Alexander Gutenkunst</maintainer>
@@ -15,9 +15,11 @@
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>roslaunch</exec_depend>
 
   <test_depend>code_coverage</test_depend>
   <test_depend>rostest</test_depend>
   <test_depend>rosunit</test_depend>
+  <test_depend>roslaunch</test_depend>
 
 </package>
