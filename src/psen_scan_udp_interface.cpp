@@ -27,11 +27,16 @@ namespace psen_scan
  * @param host_udp_port UDP Port to receive the data from the scanner
  */
 
-PSENscanUDPInterface::PSENscanUDPInterface(boost::asio::io_service& io_service, const std::string& scanner_ip, const uint32_t& host_udp_port)
-:socket_(io_service, udp::endpoint(udp::v4(), host_udp_port)),
-udp_endpoint_write_(boost::asio::ip::address_v4::from_string(scanner_ip), PSEN_SCAN_PORT)
+PSENscanUDPInterface::PSENscanUDPInterface(boost::asio::io_service& io_service,
+                                           const std::string& scanner_ip,
+                                           const uint32_t& host_udp_port)
+  : socket_write_(io_service, udp::endpoint(udp::v4(), host_udp_port + 1))
+  , socket_read_(io_service, udp::endpoint(udp::v4(), host_udp_port))
+  , udp_write_endpoint_(boost::asio::ip::address_v4::from_string(scanner_ip), PSEN_SCAN_PORT_WRITE)
+  , udp_read_endpoint_(boost::asio::ip::address_v4::from_string(scanner_ip), PSEN_SCAN_PORT_READ)
 {
-
+  socket_write_.connect(udp_write_endpoint_);
+  socket_read_.connect(udp_read_endpoint_);
 }
 
 /**
@@ -40,9 +45,9 @@ udp_endpoint_write_(boost::asio::ip::address_v4::from_string(scanner_ip), PSEN_S
  * @param buffer Boost send buffer class.
  */
 
-void PSENscanUDPInterface::write( const boost::asio::mutable_buffers_1& buffer )
+void PSENscanUDPInterface::write(const boost::asio::mutable_buffers_1& buffer)
 {
-  socket_.send_to(buffer, udp_endpoint_write_);
+  socket_write_.send(buffer);
 }
 
 /**
@@ -54,36 +59,48 @@ void PSENscanUDPInterface::write( const boost::asio::mutable_buffers_1& buffer )
  * @throws UDPReadTimeoutException
  */
 
-std::size_t PSENscanUDPInterface::read( boost::asio::mutable_buffers_1& buffer )
+std::size_t PSENscanUDPInterface::read(boost::asio::mutable_buffers_1& buffer)
 {
-  static int duration_counter=1;
+  static int duration_counter = 1;
   typedef boost::chrono::system_clock Clock;
-  typedef boost::chrono::duration<long, boost::ratio<1>> Second;
+  typedef boost::chrono::duration<int64_t, boost::ratio<1>> Second;
   Clock::time_point t1 = Clock::now();
   Clock::duration d = Clock::now() - t1;
-  while (0 == socket_.available())
+  while (0 == socket_read_.available())
   {
-     d = Clock::now() - t1;
-     Second s(duration_counter);
-     if (d > s)
-     {
-       if (60 > duration_counter) duration_counter += 10;
-       throw UDPReadTimeoutException("Could not receive UDP packet.");
-     }
+    d = Clock::now() - t1;
+    Second s(duration_counter);
+    if (d > s)
+    {
+      if (60 > duration_counter)
+      {
+        duration_counter += 10;
+      }
+      throw UDPReadTimeoutException("Could not receive UDP packet.");
+    }
   };
   duration_counter = 1;
-  return socket_.receive_from(buffer, udp_endpoint_read_);
+  return socket_read_.receive(buffer);
 }
 
-
 /**
- * @brief Get the Udp Endpoint object for reading
+ * @brief Get the Udp Endpoint object used for write communication
  *
  * @return udp::endpoint
  */
-udp::endpoint PSENscanUDPInterface::getUdpEndpointRead()
+udp::endpoint PSENscanUDPInterface::getUdpWriteEndpoint() const
 {
-  return udp_endpoint_read_;
+  return udp_write_endpoint_;
 };
 
-}
+/**
+ * @brief Get the Udp Endpoint object used for read communication
+ *
+ * @return udp::endpoint
+ */
+udp::endpoint PSENscanUDPInterface::getUdpReadEndpoint() const
+{
+  return udp_read_endpoint_;
+};
+
+}  // namespace psen_scan
