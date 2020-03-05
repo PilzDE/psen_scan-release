@@ -34,6 +34,48 @@ catkin_package(
   CATKIN_DEPENDS roscpp sensor_msgs
 )
 
+###############
+## Sanitizer ##
+###############
+# to run (only one sanitizer at a time):
+# 1. Set environment variables for log_path in your shell
+# export ASAN_OPTIONS="log_path=/path/to/asan-logs"
+# export TSAN_OPTIONS="log_path=/path/to/tsan-logs"
+# export UBSAN_OPTIONS="log_path=/path/to/ubsan-logs"
+# 2. Compile
+# catkin_make -DCATKIN_SANITIZER=address|thread|undefined
+# 3. Run the node
+# 4. Check log_path folder for contents
+# build and devel folders have to be deleted before run
+if(CATKIN_SANITIZER)
+  set(SANITIZER_OPTIONS "address|thread|undefined")
+  if(CATKIN_SANITIZER MATCHES ${SANITIZER_OPTIONS})
+    message(STATUS "${CATKIN_SANITIZER}-sanitizer activated.")
+    set(CMAKE_CXX_FLAGS "-fsanitize=${CATKIN_SANITIZER} -g")
+  else()
+    message(FATAL_ERROR "${CATKIN_SANITIZER} is not a valid sanitizer. Valid options are: [${SANITIZER_OPTIONS}]")
+  endif()
+endif()
+
+################
+## Clang tidy ##
+################
+# to run: catkin_make -DCATKIN_ENABLE_CLANG_TIDY=true
+# build and devel folders have to be deleted before run
+if(CATKIN_ENABLE_CLANG_TIDY)
+  find_program(
+    CLANG_TIDY_EXE
+    NAMES "clang-tidy"
+    DOC "Path to clang-tidy executable"
+    )
+  if(NOT CLANG_TIDY_EXE)
+    message(FATAL_ERROR "clang-tidy not found.")
+  else()
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+  endif()
+endif()
+
 ###########
 ## Build ##
 ###########
@@ -47,6 +89,7 @@ set(${PROJECT_NAME}_sources
   src/scanner.cpp
   src/scanner_frames.cpp
   src/laserscan.cpp
+  src/psen_scan_internal_angle.cpp
   src/psen_scan_udp_interface.cpp
 )
 
@@ -93,12 +136,15 @@ install(TARGETS
 if(CATKIN_ENABLE_TESTING)
 
   find_package(rostest REQUIRED)
+  find_package(roslaunch REQUIRED)
   find_package(code_coverage REQUIRED)
 
   if(ENABLE_COVERAGE_TESTING)
     include(CodeCoverage)
     APPEND_COVERAGE_COMPILER_FLAGS()
   endif()
+
+  roslaunch_add_file_check(launch)
 
   include_directories(include ${catkin_INCLUDE_DIR})
 
@@ -107,6 +153,7 @@ if(CATKIN_ENABLE_TESTING)
     src/scanner.cpp
     src/scanner_frames.cpp
     src/laserscan.cpp
+    src/psen_scan_internal_angle.cpp
     src/psen_scan_udp_interface.cpp
   )
   target_link_libraries(scanner_test
@@ -118,14 +165,25 @@ if(CATKIN_ENABLE_TESTING)
     test/ros_scanner_node_test.cpp
     src/ros_scanner_node.cpp
     src/laserscan.cpp
+    src/psen_scan_internal_angle.cpp
   )
   target_link_libraries(ros_scanner_node_test
     ${catkin_LIBRARIES}
   )
 
+  catkin_add_gtest(psen_scan_internal_angle_test
+    test/psen_scan_internal_angle_test.cpp
+    src/psen_scan_internal_angle.cpp
+  )
+  target_link_libraries(psen_scan_internal_angle_test
+    ${catkin_LIBRARIES}
+    gtest_main
+  )
+
   catkin_add_gtest(psen_scan_udp_interface_test
-    src/psen_scan_udp_interface.cpp
     test/psen_scan_udp_interface_test.cpp
+    src/psen_scan_internal_angle.cpp
+    src/psen_scan_udp_interface.cpp
   )
   target_link_libraries(psen_scan_udp_interface_test
     ${catkin_LIBRARIES}
@@ -136,6 +194,7 @@ if(CATKIN_ENABLE_TESTING)
     test/ros_parameter_handler_test.test
     test/ros_parameter_handler_test.cpp
     src/ros_parameter_handler.cpp
+    src/psen_scan_internal_angle.cpp
   )
   target_link_libraries(ros_parameter_handler_test
     ${catkin_LIBRARIES}
