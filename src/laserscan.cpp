@@ -18,18 +18,16 @@
 namespace psen_scan
 {
 /**
-  * @brief Construct a new Laser Scan object
-  *
-  * @param resolution Distance of angle between the measurements in tenths of degree.
-  * @param min_scan_angle Lowest  Angle the Scanner is scanning in tenths of degree.
-  * @param max_scan_angle Highest Angle the Scanner is scanning in tenths of degree.
-  */
+ * @brief Construct a new Laser Scan object
+ *
+ * @param resolution Distance of angle between the measurements in tenths of degree.
+ * @param min_scan_angle Lowest  Angle the Scanner is scanning in tenths of degree.
+ * @param max_scan_angle Highest Angle the Scanner is scanning in tenths of degree.
+ */
 LaserScan::LaserScan(const PSENscanInternalAngle& resolution,
                      const PSENscanInternalAngle& min_scan_angle,
                      const PSENscanInternalAngle& max_scan_angle)
-  : resolution_(resolution)
-  , min_scan_angle_(min_scan_angle)
-  , max_scan_angle_(max_scan_angle)
+  : resolution_(resolution), min_scan_angle_(min_scan_angle), max_scan_angle_(max_scan_angle)
 {
   measures_.clear();
 }
