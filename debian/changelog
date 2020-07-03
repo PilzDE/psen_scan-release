@@ -1,0 +1,49 @@
+ros-melodic-psen-scan (1.0.5-1bionic) bionic; urgency=high
+
+  * Add coverage check to travis ci and switches to cmake version 2.8.12
+  * Rename all test-files and move into subfolders
+  * Update README
+  * Remove ros parameters 'publish_topic' and 'node_name'.
+  * Add integrationtest to test correct publishing of scan topic.
+  * Change Rviz config to some common values
+  * Add new acceptance test for psen_scan.
+  * Add travis job for clang-format
+  * Contributors: Pilz GmbH & Co KG
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Thu, 02 Jul 2020 22:00:00 -0000
+
+ros-melodic-psen-scan (1.0.4-1bionic) bionic; urgency=high
+
+  * Fix/ros parameter handling (#15)
+  * Add Travis and ROS Buildfarm Badges to README. (#16)
+  * Minor typefix (#14)
+  * Fix unstable udp interface test. (#13)
+  * Feature/code analysis tools (#12)
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Wed, 04 Mar 2020 23:00:00 -0000
+
+ros-melodic-psen-scan (1.0.3-1bionic) bionic; urgency=high
+
+  * Add x-axis-rotation feature.
+    Introduced new parameter "x_axis_rotation" which describes clockwise rotation of the x-axis around the center in degrees.
+    The default value is 275°/2 = 137.5°.
+    Then the x-axis points in the direction of the middle of the scan.
+  * Additional change:
+    Fill time related message fields in sensor_msgs/LaserScan message.
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Thu, 16 Jan 2020 23:00:00 -0000
+
+ros-melodic-psen-scan (1.0.2-1bionic) bionic; urgency=high
+
+  * Change spinner to AsyncSpinner. (#6)
+  * Add missing install of launch files (#5)
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Mon, 16 Dec 2019 23:00:00 -0000
+
+ros-melodic-psen-scan (1.0.1-1bionic) bionic; urgency=high
+
+  * Initial Commit.
+
+ -- Alexander Gutenkunst <a.gutenkunst@pilz.de>  Sun, 24 Nov 2019 23:00:00 -0000
+
+
