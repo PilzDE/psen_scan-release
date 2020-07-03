@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/build_ros_message_exception.h>
+#include <psen_scan/decrypt_password_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(BuildROSMessageExceptionTest, new_build_ros_message_exception)
+TEST(DecryptPasswordExceptionTest, new_build_ros_message_exception)
 {
-  std::string except_str = "BuildROSMessageException";
-  std::unique_ptr<BuildROSMessageException> e(new BuildROSMessageException(except_str));
+  std::string except_str = "DecryptPasswordException";
+  std::unique_ptr<DecryptPasswordException> e(new DecryptPasswordException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test

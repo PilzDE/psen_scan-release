@@ -13,23 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef PSEN_SCAN_TEST_MOCK_PSEN_SCAN_UDP_INTERFACE_H
-#define PSEN_SCAN_TEST_MOCK_PSEN_SCAN_UDP_INTERFACE_H
+#include <gtest/gtest.h>
+#include <psen_scan/diagnostic_information_exception.h>
 
-#include <psen_scan/psen_scan_udp_interface.h>
-#include <gmock/gmock.h>
+using namespace psen_scan;
 
 namespace psen_scan_test
 {
-class MockPSENscanUDPInterface : public psen_scan::UDPInterface
+TEST(DiagnosticInformationExceptionTest, new_diagnostic_information_exception)
 {
-public:
-  MOCK_METHOD1(write, void(const boost::asio::mutable_buffers_1& buffer));
-  MOCK_METHOD1(read, std::size_t(boost::asio::mutable_buffers_1& buffer));
-
-private:
-  udp::endpoint udp_endpoint_read_;
-};
+  std::string except_str = "DiagnosticInformationException";
+  std::unique_ptr<DiagnosticInformationException> e(new DiagnosticInformationException(except_str));
+  EXPECT_EQ(except_str, e->what());
 }
-
-#endif  // PSEN_SCAN_TEST_MOCK_PSEN_SCAN_UDP_INTERFACE_H
+}  // namespace psen_scan_test

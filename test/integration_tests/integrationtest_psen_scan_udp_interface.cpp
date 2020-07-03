@@ -15,7 +15,7 @@
 
 #include <psen_scan/psen_scan_udp_interface.h>
 #include <gtest/gtest.h>
-#include "mock_udp_server.h"
+#include "psen_scan/mock_udp_server.h"
 #include <boost/thread.hpp>
 #include "psen_scan/udp_read_timeout_exception.h"
 #include "psen_scan/fetch_monitoring_frame_exception.h"
@@ -56,4 +56,4 @@ TEST(PSENscanUDPInterfaceTest, test_all)
 
   EXPECT_THROW(udp_interface->read(temp), UDPReadTimeoutException);
 }
-}
+}  // namespace psen_scan_test

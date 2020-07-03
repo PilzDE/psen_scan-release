@@ -13,17 +13,23 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <gtest/gtest.h>
-#include <psen_scan/coherent_monitoring_frames_exception.h>
+#ifndef PSEN_SCAN_TEST_MOCK_SCANNER_H
+#define PSEN_SCAN_TEST_MOCK_SCANNER_H
 
-using namespace psen_scan;
+#include <psen_scan/scanner.h>
+#include <gmock/gmock.h>
 
 namespace psen_scan_test
 {
-TEST(CoherentMonitoringFramesExceptionTest, new_coherent_monitoring_frames_exception)
+class MockScanner : public psen_scan::vScanner
 {
-  std::string except_str = "CoherentMonitoringFramesException";
-  std::unique_ptr<CoherentMonitoringFramesException> e(new CoherentMonitoringFramesException(except_str));
-  EXPECT_EQ(except_str, e->what());
-}
-}
+public:
+  MOCK_METHOD0(start, void());
+  MOCK_METHOD0(stop, void());
+  MOCK_METHOD0(getCompleteScan, psen_scan::LaserScan());
+
+private:
+};
+}  // namespace psen_scan_test
+
+#endif  // PSEN_SCAN_TEST_MOCK_SCANNER_H

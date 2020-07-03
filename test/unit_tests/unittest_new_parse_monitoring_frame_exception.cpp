@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/udp_read_timeout_exception.h>
+#include <psen_scan/parse_monitoring_frame_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(UDPReadTimeoutExceptionTest, new_udp_read_timeout_exception)
+TEST(ParseMonitoringFrameExceptionTest, new_parse_monitoring_frame_exception)
 {
-  std::string except_str = "UDPReadTimeoutException";
-  std::unique_ptr<UDPReadTimeoutException> e(new UDPReadTimeoutException(except_str));
+  std::string except_str = "ParseMonitoringFrameException";
+  std::unique_ptr<ParseMonitoringFrameException> e(new ParseMonitoringFrameException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test
