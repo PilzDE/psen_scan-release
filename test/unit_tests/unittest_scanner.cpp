@@ -16,7 +16,7 @@
 #include <ros/ros.h>
 #include <gtest/gtest.h>
 
-#include "mock_psen_scan_udp_interface.h"
+#include "psen_scan/mock_psen_scan_udp_interface.h"
 #include "psen_scan/scanner.h"
 #include "psen_scan/laserscan.h"
 #include "psen_scan/scanner_data.h"
@@ -28,13 +28,13 @@
 
 using namespace psen_scan;
 using ::testing::_;
+using ::testing::Assign;
 using ::testing::AtLeast;
 using ::testing::AtMost;
-using ::testing::Return;
 using ::testing::DoAll;
-using ::testing::Assign;
-using ::testing::SetArgReferee;
+using ::testing::Return;
 using ::testing::SetArgPointee;
+using ::testing::SetArgReferee;
 using ::testing::Throw;
 
 #define READ_FRAME(x) WillOnce(DoAll(fillArg0(expected_monitoring_frames_.at(x)), Return(sizeof(MonitoringFrame))))
@@ -546,10 +546,4 @@ TEST_F(ScannerTest, new_scanner)
                                                                           PSENscanInternalAngle(2750),
                                                                           std::move(udp_interface_ptr)));
 }
-}
-
-int main(int argc, char** argv)
-{
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}
+}  // namespace psen_scan_test

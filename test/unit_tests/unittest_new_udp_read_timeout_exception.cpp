@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/decrypt_password_exception.h>
+#include <psen_scan/udp_read_timeout_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(DecryptPasswordExceptionTest, new_build_ros_message_exception)
+TEST(UDPReadTimeoutExceptionTest, new_udp_read_timeout_exception)
 {
-  std::string except_str = "DecryptPasswordException";
-  std::unique_ptr<DecryptPasswordException> e(new DecryptPasswordException(except_str));
+  std::string except_str = "UDPReadTimeoutException";
+  std::unique_ptr<UDPReadTimeoutException> e(new UDPReadTimeoutException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test

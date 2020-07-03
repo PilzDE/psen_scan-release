@@ -38,11 +38,7 @@ ROSScannerNode::ROSScannerNode(ros::NodeHandle& nh,
                                const uint16_t& skip,
                                const Degree& x_axis_rotation,
                                std::unique_ptr<vScanner> scanner)
-  : nh_(nh)
-  , frame_id_(frame_id)
-  , skip_(skip)
-  , scanner_(std::move(scanner))
-  , x_axis_rotation_(x_axis_rotation)
+  : nh_(nh), frame_id_(frame_id), skip_(skip), scanner_(std::move(scanner)), x_axis_rotation_(x_axis_rotation)
 {
   if (!scanner_)
   {
@@ -101,8 +97,9 @@ sensor_msgs::LaserScan ROSScannerNode::buildRosMessage(const LaserScan& lasersca
   ros_message.scan_time = SCAN_TIME;
   ros_message.range_min = 0;
   ros_message.range_max = 10;
-  ros_message.ranges.insert(
-      ros_message.ranges.end(), laserscan.measures_.rbegin(), laserscan.measures_.rend());  // reverse order
+  ros_message.ranges.insert(ros_message.ranges.end(),
+                            laserscan.measures_.rbegin(),
+                            laserscan.measures_.rend());  // reverse order
   std::transform(ros_message.ranges.begin(), ros_message.ranges.end(), ros_message.ranges.begin(), [](float f) {
     return f * 0.001;
   });

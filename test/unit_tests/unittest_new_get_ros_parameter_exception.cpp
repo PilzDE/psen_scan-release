@@ -13,23 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef PSEN_SCAN_TEST_MOCK_SCANNER_H
-#define PSEN_SCAN_TEST_MOCK_SCANNER_H
+#include <gtest/gtest.h>
+#include <psen_scan/get_ros_parameter_exception.h>
 
-#include <psen_scan/scanner.h>
-#include <gmock/gmock.h>
+using namespace psen_scan;
 
 namespace psen_scan_test
 {
-class MockScanner : public psen_scan::vScanner
+TEST(GetROSParameterExceptionTest, new_get_ros_parameter_exception)
 {
-public:
-  MOCK_METHOD0(start, void());
-  MOCK_METHOD0(stop, void());
-  MOCK_METHOD0(getCompleteScan, psen_scan::LaserScan());
-
-private:
-};
+  std::string except_str = "GetROSParameterException";
+  std::unique_ptr<GetROSParameterException> e(new GetROSParameterException(except_str));
+  EXPECT_EQ(except_str, e->what());
 }
-
-#endif  // PSEN_SCAN_TEST_MOCK_SCANNER_H
+}  // namespace psen_scan_test

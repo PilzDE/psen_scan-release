@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/get_ros_parameter_exception.h>
+#include <psen_scan/build_ros_message_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(GetROSParameterExceptionTest, new_get_ros_parameter_exception)
+TEST(BuildROSMessageExceptionTest, new_build_ros_message_exception)
 {
-  std::string except_str = "GetROSParameterException";
-  std::unique_ptr<GetROSParameterException> e(new GetROSParameterException(except_str));
+  std::string except_str = "BuildROSMessageException";
+  std::unique_ptr<BuildROSMessageException> e(new BuildROSMessageException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test
