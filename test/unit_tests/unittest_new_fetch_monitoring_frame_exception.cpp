@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/psen_scan_fatal_exception.h>
+#include <psen_scan/fetch_monitoring_frame_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(PSENScanFatalExceptionTest, new_psen_scan_fatal_exception)
+TEST(FetchMonitoringFrameExceptionTest, new_fetch_monitoring_frame_exception)
 {
-  std::string except_str = "PSENScanFatalException";
-  std::unique_ptr<PSENScanFatalException> e(new PSENScanFatalException(except_str));
+  std::string except_str = "FetchMonitoringFrameException";
+  std::unique_ptr<FetchMonitoringFrameException> e(new FetchMonitoringFrameException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test

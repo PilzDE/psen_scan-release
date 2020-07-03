@@ -21,12 +21,12 @@
 #include "psen_scan/build_ros_message_exception.h"
 #include "psen_scan/fetch_monitoring_frame_exception.h"
 #include "psen_scan/psen_scan_fatal_exception.h"
-#include "mock_scanner.h"
+#include "psen_scan/mock_scanner.h"
 #include <boost/thread.hpp>
 
 using namespace psen_scan;
-using ::testing::Return;
 using ::testing::DoAll;
+using ::testing::Return;
 using ::testing::Throw;
 
 namespace psen_scan_test
@@ -73,10 +73,7 @@ ACTION(ROS_SHUTDOWN)
 class TestSubscriber
 {
 public:
-  TestSubscriber(const ros::NodeHandle& nh, const std::string& topic)
-    : receivedMessage_(0)
-    , ready_(false)
-    , nh_(nh)
+  TestSubscriber(const ros::NodeHandle& nh, const std::string& topic) : receivedMessage_(0), ready_(false), nh_(nh)
   {
     sub_ = nh_.subscribe(topic,
                          1000,
@@ -255,11 +252,11 @@ TEST_F(ros_scanner_node_test, constructor)
                                   ),
                PSENScanFatalException);
 }
-}
+}  // namespace psen_scan_test
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "ros_scanner_node_test");
+  ros::init(argc, argv, "integrationtest_ros_scanner_node");
   ros::NodeHandle nh;  // keep one nh to avoid
   testing::InitGoogleTest(&argc, argv);
 

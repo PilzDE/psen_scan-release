@@ -14,16 +14,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <gtest/gtest.h>
-#include <psen_scan/diagnostic_information_exception.h>
+#include <psen_scan/coherent_monitoring_frames_exception.h>
 
 using namespace psen_scan;
 
 namespace psen_scan_test
 {
-TEST(DiagnosticInformationExceptionTest, new_diagnostic_information_exception)
+TEST(CoherentMonitoringFramesExceptionTest, new_coherent_monitoring_frames_exception)
 {
-  std::string except_str = "DiagnosticInformationException";
-  std::unique_ptr<DiagnosticInformationException> e(new DiagnosticInformationException(except_str));
+  std::string except_str = "CoherentMonitoringFramesException";
+  std::unique_ptr<CoherentMonitoringFramesException> e(new CoherentMonitoringFramesException(except_str));
   EXPECT_EQ(except_str, e->what());
 }
-}
+}  // namespace psen_scan_test

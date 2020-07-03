@@ -43,7 +43,6 @@ public:
   PSENscanInternalAngle getAngleStart() const;
   PSENscanInternalAngle getAngleEnd() const;
   Degree getXAxisRotation() const;
-  std::string getPublishTopic() const;
 
 private:
   ros::NodeHandle const nh_;          /**< Nodehandle through which parameters are fetched */
@@ -56,11 +55,10 @@ private:
   PSENscanInternalAngle angle_start_; /**< Start angle of measurement */
   PSENscanInternalAngle angle_end_;   /**< End angle of measurement */
   Degree x_axis_rotation_;            /**< Rotation of x-axis arround the center */
-  std::string publish_topic_;         /**< Topic to publish Laserscan data on */
 
 public:
   static std::string decryptPassword(const std::string& encrypted_password);
 };
-}
+}  // namespace psen_scan
 
 #endif  // PSEN_SCAN_ROS_PARAMETER_HANDLER_H
