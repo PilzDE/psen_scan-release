@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Pilz GmbH & Co. KG
+// Copyright (c) 2019-2020 Pilz GmbH & Co. KG
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
@@ -16,10 +16,11 @@
 #ifndef PSEN_SCAN_SCANNER_H
 #define PSEN_SCAN_SCANNER_H
 
-#include "psen_scan/scanner_frames.h"
-#include "psen_scan/psen_scan_udp_interface.h"
-#include "psen_scan/laserscan.h"
 #include <memory>
+
+#include "psen_scan/scanner_frames.h"
+#include "psen_scan/scanner_communication_interface.h"
+#include "psen_scan/laserscan.h"
 
 namespace psen_scan
 {
@@ -47,7 +48,7 @@ public:
           const std::string& password,
           const PSENscanInternalAngle& angle_start,
           const PSENscanInternalAngle& angle_end,
-          std::unique_ptr<UDPInterface> udp_interface);
+          std::unique_ptr<ScannerCommunicationInterface> communication_interface);
 
   void start();
   void stop();
@@ -60,12 +61,14 @@ private:
   PSENscanInternalAngle angle_start_;           /**< Start angle of Laserscanner measurements */
   PSENscanInternalAngle angle_end_;             /**< End angle of Laserscanner measurements */
   MonitoringFrame previous_monitoring_frame_;   /**< Buffer for incoming Laserscanner data */
-  std::unique_ptr<UDPInterface> udp_interface_; /**< Pointer to UDP Communication Interface */
+  std::unique_ptr<ScannerCommunicationInterface> communication_interface_;
 
-  MonitoringFrame fetchMonitoringFrame();
+private:
+  MonitoringFrame fetchMonitoringFrame(std::chrono::steady_clock::duration timeout);
   bool isDiagnosticInformationOk(const DiagnosticInformation& diag_info);
   bool parseFields(const MonitoringFrame& monitoring_frame);
 };
+
 }  // namespace psen_scan
 
 #endif  // PSEN_SCAN_SCANNER_H
