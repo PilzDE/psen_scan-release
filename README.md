@@ -1,3 +1,7 @@
+## **Warning**
+
+**You are using an outdated version of psen_scan. Please update your scanner firmware and use the new psen_scan_v2 package. See https://github.com/PilzDE/psen_scan_v2/#migration for detailed instruction.**
+
 [![PILZ](img/pilz-logo.png)](https://www.pilz.com)
 
 # PILZ safety laser scanner PSENscan
@@ -99,6 +103,9 @@ This example configures the safety laser scanner at 192.168.0.10 to send it´s f
 If you've created an application package with your own launch file as described in the
 [tutorials](http://wiki.ros.org/psen_scan/Tutorials/),
 you can easily adjust the aforementioned configuration parameters.
+
+## Test concept
+![psen_scan_test_concept](doc/test_architecture.svg)
 
 ## You need further information?
 Our international hotline staff will support you individually about our ROS packages at
