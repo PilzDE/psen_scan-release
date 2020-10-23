@@ -1,3 +1,26 @@
+## psen_scan (melodic) - 1.0.8-1
+
+The packages in the `psen_scan` repository were released into the `melodic` distro by running `/usr/bin/bloom-release --rosdistro melodic --track melodic psen_scan --edit` on `Fri, 23 Oct 2020 07:40:05 -0000`
+
+The `psen_scan` package was released.
+
+Version of package(s) in repository `psen_scan`:
+
+- upstream repository: https://github.com/PilzDE/psen_scan.git
+- release repository: https://github.com/PilzDE/psen_scan-release.git
+- rosdistro version: `1.0.7-1`
+- old version: `1.0.7-1`
+- new version: `1.0.8-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.0`
+- catkin_pkg version: `0.4.23`
+- rosdep version: `0.19.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## psen_scan (melodic) - 1.0.7-1
 
 The packages in the `psen_scan` repository were released into the `melodic` distro by running `/usr/bin/bloom-release psen_scan --rosdistro melodic` on `Fri, 31 Jul 2020 12:15:20 -0000`
